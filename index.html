@@ -28,9 +28,9 @@
     }
 
     img {
-      max-width: 90vw;     /* biar muat di layar */
-      max-height: 70vh;    /* batas tinggi */
-      object-fit: contain; /* biar proporsional */
+      max-width: 90vw;
+      max-height: 70vh;
+      object-fit: contain;
       border: 3px solid #444;
       border-radius: 12px;
       margin-bottom: 15px;
@@ -62,7 +62,6 @@
       background-color: #45a049;
     }
 
-    /* Responsive: ponsel */
     @media (max-width: 600px) {
       img {
         max-width: 95vw;
@@ -80,12 +79,10 @@
 <body>
   <h2>Pilih Kategori Gambar</h2>
 
-  <!-- Gambar besar -->
   <img id="gambarUtama" src="" alt="Pilih kategori dulu">
 
-  <!-- Kontrol -->
   <div class="controls">
-    <select id="kategori">
+    <select id="kategori" onchange="resetKategori()">
       <option value="">--Pilih Kategori--</option>
       <option value="hewan">Hewan</option>
       <option value="buah">Buah</option>
@@ -96,25 +93,51 @@
   </div>
 
   <script>
-    // jumlah gambar per kategori (sesuaikan dengan folder lu)
     const jumlahGambar = {
-      hewan: 20,   // hewan/1.jpg ... 20.jpg
-      buah: 21,    // buah/1.jpg ... 25.jpg
-      benda: 23,   // benda/1.jpg ... 15.jpg
-      kartun: 10   // kartun/1.jpg ... 30.jpg
+      hewan: 20,
+      buah: 21,
+      benda: 23,
+      kartun: 10
     };
 
     const gambarUtama = document.getElementById("gambarUtama");
     const kategori = document.getElementById("kategori");
 
+    // simpan daftar gambar yang tersisa per kategori
+    let daftarGambar = {};
+
+    function resetKategori() {
+      const pilih = kategori.value;
+      if (pilih) {
+        daftarGambar[pilih] = Array.from(
+          { length: jumlahGambar[pilih] },
+          (_, i) => i + 1
+        );
+      }
+      gambarUtama.src = "";
+    }
+
     function acakGambar() {
       const pilih = kategori.value;
-      if (pilih && jumlahGambar[pilih]) {
-        const randomIndex = Math.floor(Math.random() * jumlahGambar[pilih]) + 1;
-        gambarUtama.src = `${pilih}/${randomIndex}.jpg`;
-      } else {
+      if (!pilih) {
         alert("Pilih kategori dulu!");
+        return;
       }
+
+      if (!daftarGambar[pilih] || daftarGambar[pilih].length === 0) {
+        // reset kalau sudah habis
+        daftarGambar[pilih] = Array.from(
+          { length: jumlahGambar[pilih] },
+          (_, i) => i + 1
+        );
+        alert("Semua gambar sudah keluar, diacak ulang!");
+      }
+
+      // ambil random index dari daftar tersisa
+      const randIdx = Math.floor(Math.random() * daftarGambar[pilih].length);
+      const nomorGambar = daftarGambar[pilih].splice(randIdx, 1)[0];
+
+      gambarUtama.src = `${pilih}/${nomorGambar}.jpg`;
     }
   </script>
 </body>
