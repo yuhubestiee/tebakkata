@@ -33,10 +33,10 @@
   <script>
     // jumlah gambar per kategori
     const jumlahGambar = {
-      hewan: 20,   // folder hewan berisi 1.png ... 30.png
-      buah: 21,    // folder buah berisi 1.png ... 25.png
-      benda: 0,   // folder benda berisi 1.png ... 15.png
-      kartun: 0   // folder kartun berisi 1.png ... 20.png
+      hewan: 20,   // folder hewan berisi 1.jpg ... 20.jpg
+      buah: 21,    // folder buah berisi 1.jpg ... 25.jpg
+      benda: 0,   // folder benda berisi 1.jpg ... 15.jpg
+      kartun: 0   // folder kartun berisi 1.jpg ... 30.jpg
     };
 
     const gambarUtama = document.getElementById("gambarUtama");
@@ -46,7 +46,7 @@
       const pilih = kategori.value;
       if (pilih && jumlahGambar[pilih]) {
         const randomIndex = Math.floor(Math.random() * jumlahGambar[pilih]) + 1;
-        gambarUtama.src = `${pilih}/${randomIndex}.png`;
+        gambarUtama.src = `${pilih}/${randomIndex}.jpg`; // <<--- ganti jadi .jpg
       } else {
         alert("Pilih kategori dulu!");
       }
