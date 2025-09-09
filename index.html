@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pilihan Gambar</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 30px; background: #f4f4f9; }
+    h2 { margin-bottom: 20px; }
+    img { max-width: 500px; border: 3px solid #444; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    select, button { font-size: 16px; padding: 10px 14px; margin: 8px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
+    button { background-color: #4CAF50; color: white; border: none; }
+    button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <h2>Pilih Kategori Gambar</h2>
+
+  <!-- Gambar besar -->
+  <img id="gambarUtama" src="" alt="Pilih kategori dulu">
+
+  <!-- Kontrol -->
+  <div>
+    <select id="kategori">
+      <option value="">--Pilih Kategori--</option>
+      <option value="hewan">Hewan</option>
+      <option value="buah">Buah</option>
+      <option value="benda">Benda</option>
+      <option value="kartun">Kartun</option>
+    </select>
+    <button onclick="acakGambar()">Acak Gambar</button>
+  </div>
+
+  <script>
+    // jumlah gambar per kategori
+    const jumlahGambar = {
+      hewan: 20,   // folder hewan berisi 1.png ... 30.png
+      buah: 21,    // folder buah berisi 1.png ... 25.png
+      benda: 0,   // folder benda berisi 1.png ... 15.png
+      kartun: 0   // folder kartun berisi 1.png ... 20.png
+    };
+
+    const gambarUtama = document.getElementById("gambarUtama");
+    const kategori = document.getElementById("kategori");
+
+    function acakGambar() {
+      const pilih = kategori.value;
+      if (pilih && jumlahGambar[pilih]) {
+        const randomIndex = Math.floor(Math.random() * jumlahGambar[pilih]) + 1;
+        gambarUtama.src = `${pilih}/${randomIndex}.png`;
+      } else {
+        alert("Pilih kategori dulu!");
+      }
+    }
+  </script>
+</body>
+</html>
