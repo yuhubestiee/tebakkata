@@ -4,12 +4,77 @@
   <meta charset="UTF-8">
   <title>Pilihan Gambar</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin: 30px; background: #f4f4f9; }
-    h2 { margin-bottom: 20px; }
-    img { max-width: 500px; border: 3px solid #444; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-    select, button { font-size: 16px; padding: 10px 14px; margin: 8px; border-radius: 8px; border: 1px solid #ccc; cursor: pointer; }
-    button { background-color: #4CAF50; color: white; border: none; }
-    button:hover { background-color: #45a049; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      background: #f4f4f9;
+      padding: 10px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 90vw;     /* biar muat di layar */
+      max-height: 70vh;    /* batas tinggi */
+      object-fit: contain; /* biar proporsional */
+      border: 3px solid #444;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    select, button {
+      font-size: 16px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive: ponsel */
+    @media (max-width: 600px) {
+      img {
+        max-width: 95vw;
+        max-height: 60vh;
+      }
+      select, button {
+        width: 100%;
+      }
+      .controls {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
@@ -19,7 +84,7 @@
   <img id="gambarUtama" src="" alt="Pilih kategori dulu">
 
   <!-- Kontrol -->
-  <div>
+  <div class="controls">
     <select id="kategori">
       <option value="">--Pilih Kategori--</option>
       <option value="hewan">Hewan</option>
@@ -31,12 +96,12 @@
   </div>
 
   <script>
-    // jumlah gambar per kategori
+    // jumlah gambar per kategori (sesuaikan dengan folder lu)
     const jumlahGambar = {
-      hewan: 20,   // folder hewan berisi 1.jpg ... 20.jpg
-      buah: 21,    // folder buah berisi 1.jpg ... 25.jpg
-      benda: 0,   // folder benda berisi 1.jpg ... 15.jpg
-      kartun: 0   // folder kartun berisi 1.jpg ... 30.jpg
+      hewan: 20,   // hewan/1.jpg ... 20.jpg
+      buah: 21,    // buah/1.jpg ... 25.jpg
+      benda: 15,   // benda/1.jpg ... 15.jpg
+      kartun: 30   // kartun/1.jpg ... 30.jpg
     };
 
     const gambarUtama = document.getElementById("gambarUtama");
@@ -46,7 +111,7 @@
       const pilih = kategori.value;
       if (pilih && jumlahGambar[pilih]) {
         const randomIndex = Math.floor(Math.random() * jumlahGambar[pilih]) + 1;
-        gambarUtama.src = `${pilih}/${randomIndex}.jpg`; // <<--- ganti jadi .jpg
+        gambarUtama.src = `${pilih}/${randomIndex}.jpg`;
       } else {
         alert("Pilih kategori dulu!");
       }
